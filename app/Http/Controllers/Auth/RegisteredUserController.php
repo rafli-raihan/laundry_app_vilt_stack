@@ -15,12 +15,16 @@ use Inertia\Response;
 
 class RegisteredUserController extends Controller
 {
+    public function index()
+    {
+        return Inertia::render('accounts/Index');
+    }
     /**
      * Show the registration page.
      */
     public function create(): Response
     {
-        return Inertia::render('auth/Register');
+        return Inertia::render('accounts/Register');
     }
 
     /**
@@ -32,7 +36,7 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|lowercase|email|max:255|unique:'.User::class,
+            'email' => 'required|string|lowercase|email|max:255|unique:' . User::class,
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 

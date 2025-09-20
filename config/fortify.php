@@ -144,16 +144,11 @@ return [
     */
 
     'features' => [
-        // Features::registration(),
-        // Features::resetPasswords(),
-        // Features::emailVerification(),
-        // Features::updateProfileInformation(),
-        // Features::updatePasswords(),
-        Features::twoFactorAuthentication([
-            'confirm' => true,
-            'confirmPassword' => true,
-            // 'window' => 0
-        ]),
+        // remove or comment out registration feature so Fortify won't expose a public /register
+        // \Laravel\Fortify\Features::registration(),
+        \Laravel\Fortify\Features::resetPasswords(),
+        \Laravel\Fortify\Features::updateProfileInformation(),
+        \Laravel\Fortify\Features::updatePasswords(),
+        \Laravel\Fortify\Features::twoFactorAuthentication(),
     ],
-
 ];

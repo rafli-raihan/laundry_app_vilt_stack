@@ -19,8 +19,13 @@ import AppLogo from './AppLogo.vue';
 
 const mainNavItems: NavItem[] = [
     {
-        title: 'Dashboard',
+        title: 'Transaksi',
         href: dashboard(),
+        icon: LayoutGrid,
+    },
+    {
+        title: 'Pengguna',
+        href: '/accounts',
         icon: LayoutGrid,
     },
 ];
