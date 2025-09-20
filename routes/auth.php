@@ -46,11 +46,3 @@ Route::middleware('auth')->group(function () {
 });
 
 // ini untuk add account register hanya bisa diakses superadmin
-Route::middleware(['auth', 'SuperAdmin'])->group(function () {
-    Route::get('accounts', [RegisteredUserController::class, 'index']);
-
-    Route::get('accounts/register', [RegisteredUserController::class, 'create']);
-
-    Route::post('accounts/store', [RegisteredUserController::class, 'store'])
-        ->name('register_store');
-});

@@ -5,9 +5,8 @@ import TextLink from '@/components/TextLink.vue';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import AuthBase from '@/layouts/AuthLayout.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
-import { dashboard } from '@/routes';
+import { acc_index } from '@/routes';
 import { type BreadcrumbItem } from '@/types';
 import { Form, Head } from '@inertiajs/vue3';
 import { LoaderCircle } from 'lucide-vue-next';
@@ -25,8 +24,12 @@ const breadcrumbs: BreadcrumbItem[] = [
     <Head title="Register" />
 
     <AppLayout :breadcrumbs="breadcrumbs">
-        <div
-            class="p-7">
+        <div class="p-7">
+            <Link :href="acc_index().url">
+            <Button variant="outline" class="absolute top-4 left-4">
+                Back to list
+            </Button>
+            </Link>
             <Form v-bind="RegisteredUserController.store.form()"
                 :reset-on-success="['password', 'password_confirmation']" v-slot="{ errors, processing }"
                 class="flex flex-col gap-6 max-w-md">
@@ -57,6 +60,13 @@ const breadcrumbs: BreadcrumbItem[] = [
                         <Input id="password_confirmation" type="password" required :tabindex="4"
                             autocomplete="new-password" name="password_confirmation" placeholder="Confirm password" />
                         <InputError :message="errors.password_confirmation" />
+                    </div>
+
+                    <div class="grid gap-2">
+                        <Label for="id_level">Level</Label>
+                        <Input id="id_level" type="number" required autofocus :tabindex="1" autocomplete="name"
+                            name="id_level" placeholder="Ntar ganti dropdown ini buat pilih" />
+                        <InputError :message="errors.id_level" />
                     </div>
 
                     <Button type="submit" class="mt-2 w-full" tabindex="5" :disabled="processing"
