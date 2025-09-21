@@ -24,18 +24,24 @@ const mainNavItems: NavItem[] = [
         icon: BadgeDollarSign,
     },
     {
+        title: 'Customer',
+        href: dashboard(),
+        icon: BadgeDollarSign,
+    },
+    {
         title: 'Layanan',
         href: '/services',
         icon: ShowerHead,
     },
+
+];
+
+const footerNavItems: NavItem[] = [
     {
         title: 'Pengguna',
         href: acc_index().url,
         icon: Users,
     },
-];
-
-const footerNavItems: NavItem[] = [
     // {
     //     title: 'Github Repo',
     //     href: 'https://github.com/laravel/vue-starter-kit',
@@ -56,7 +62,7 @@ const footerNavItems: NavItem[] = [
                 <SidebarMenuItem>
                     <SidebarMenuButton size="lg" as-child>
                         <Link :href="dashboard()">
-                            <AppLogo />
+                        <AppLogo />
                         </Link>
                     </SidebarMenuButton>
                 </SidebarMenuItem>
