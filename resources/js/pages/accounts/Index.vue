@@ -2,7 +2,7 @@
 import AppLayout from '@/layouts/AppLayout.vue';
 import { dashboard, acc_register, acc_index, acc_edit, acc_delete } from '@/routes';
 import { type BreadcrumbItem } from '@/types';
-import { Head, Link } from '@inertiajs/vue3';
+import { Head, Link, router } from '@inertiajs/vue3';
 import Button from '@/components/ui/button/Button.vue';
 import {
     Table,
@@ -30,6 +30,15 @@ const userProps = defineProps<{
         id_level: string;
     }>;
 }>();
+
+function handleDelete(userId: number) {
+    if (confirm('Are you sure you want to delete this user?')) {
+        // Redirect to the delete route
+        router.visit(acc_delete(userId).url, {
+            method: 'delete',
+        });
+    }
+}
 </script>
 
 <template>
@@ -63,11 +72,9 @@ const userProps = defineProps<{
                         <TableCell class="text-center">{{ user.id_level }}</TableCell>
                         <TableCell class="flex gap-2">
                             <Link :href="acc_edit(user.id).url">
-                                <Button variant="default" size="sm" class="">Edit</Button>
+                            <Button variant="default" size="sm" class="">Edit</Button>
                             </Link>
-                            <Link :href="acc_delete(user.id).url">
-                                <Button variant="ghost" size="sm" class="hover:text-red-400">Delete</Button>
-                            </Link>
+                            <Button @click="handleDelete(user.id)" variant="ghost" size="sm" class="hover:text-red-400">Delete</Button>
                         </TableCell>
                     </TableRow>
                 </TableBody>
