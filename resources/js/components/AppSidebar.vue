@@ -11,7 +11,7 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import { dashboard, acc_index, customers_index } from '@/routes';
+import { dashboard, acc_index, customers_index, kasir_index } from '@/routes';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/vue3';
 import { BadgeDollarSign, BookUser, BookOpen, Folder, LayoutDashboard, ShowerHead, Users } from 'lucide-vue-next';
@@ -25,7 +25,7 @@ const mainNavItems: NavItem[] = [
     },
     {
         title: 'Kasir',
-        href: dashboard(),
+        href: kasir_index().url,
         icon: BadgeDollarSign,
     },
     {
@@ -33,11 +33,11 @@ const mainNavItems: NavItem[] = [
         href: customers_index().url,
         icon: BookUser,
     },
-    {
-        title: 'Laporan Transaksi',
-        href: dashboard(),
-        icon: BookOpen,
-    },
+    // {
+    //     title: 'Laporan Transaksi',
+    //     href: dashboard(),
+    //     icon: BookOpen,
+    // },
     {
         title: 'Layanan',
         href: '/services',

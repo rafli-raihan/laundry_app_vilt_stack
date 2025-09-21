@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\RegisteredUserController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\TransactionController;
 
 
 Route::get('/', function () {
@@ -12,6 +13,13 @@ Route::get('/', function () {
 Route::get('dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+// Semuanya bisa liat ini tp readonly
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('customers/', [App\Http\Controllers\CustomerController::class, 'index'])->name('customers_index');
+    // services
+    Route::get('services/', [App\Http\Controllers\ServiceController::class, 'index'])->name('service_index');
+});
 
 // Hanya superadmin yang bisa mengakses route di bawah ini
 Route::middleware(['auth', 'SuperAdmin'])->group(function () {
@@ -25,8 +33,6 @@ Route::middleware(['auth', 'SuperAdmin'])->group(function () {
     // delete account
     Route::delete('accounts/{user}', [RegisteredUserController::class, 'destroy'])->name('acc_delete');
 
-    // services
-    Route::get('services/', [App\Http\Controllers\ServiceController::class, 'index'])->name('service_index');
     // create service
     Route::get('services/create', [App\Http\Controllers\ServiceController::class, 'create'])->name('service_register');
     Route::post('services/store', [App\Http\Controllers\ServiceController::class, 'store'])->name('service_store');
@@ -35,9 +41,17 @@ Route::middleware(['auth', 'SuperAdmin'])->group(function () {
     Route::put('services/{service}', [App\Http\Controllers\ServiceController::class, 'update'])->name('service_update');
     // delete service
     Route::delete('services/{service}', [App\Http\Controllers\ServiceController::class, 'destroy'])->name('service_delete');
+});
+
+// Kasir (akses pengguna ter-autentikasi)
+Route::middleware(['auth', 'Operator'])->group(function () {
+    // kasir
+    Route::get('kasir', [TransactionController::class, 'index'])->name('kasir_index');
+    Route::get('kasir/customers', [TransactionController::class, 'customers'])->name('kasir_customers');
+    Route::get('kasir/services', [TransactionController::class, 'services'])->name('kasir_services');
+    Route::post('kasir/orders', [TransactionController::class, 'store'])->name('kasir_orders.store');
 
     // customers
-    Route::get('customers/', [App\Http\Controllers\CustomerController::class, 'index'])->name('customers_index');
     // create customer
     Route::get('customers/create', [App\Http\Controllers\CustomerController::class, 'create'])->name('customers_register');
     Route::post('customers/store', [App\Http\Controllers\CustomerController::class, 'store'])->name('customers_store');
@@ -47,7 +61,6 @@ Route::middleware(['auth', 'SuperAdmin'])->group(function () {
     // delete customer
     Route::delete('customers/{customer}', [App\Http\Controllers\CustomerController::class, 'destroy'])->name('customers_delete');
 });
-
 
 require __DIR__ . '/settings.php';
 require __DIR__ . '/auth.php';

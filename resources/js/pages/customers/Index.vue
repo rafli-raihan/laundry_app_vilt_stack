@@ -49,7 +49,7 @@ function handleDelete(customerId: number) {
         <div
             class="relative min-h-[100vh] flex-1 border border-sidebar-border/70 md:min-h-min dark:border-sidebar-border">
             <Link :href="customers_register().url">
-            <Button variant="outline" class="fixed top-4 right-4">Tambah Layanan</Button>
+            <Button variant="outline" class="fixed top-4 right-4">Tambah Pelanggan</Button>
             </Link>
             <Table>
                 <!-- <TableCaption></TableCaption> -->
