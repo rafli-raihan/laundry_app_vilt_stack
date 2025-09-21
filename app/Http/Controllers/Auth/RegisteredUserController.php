@@ -50,7 +50,37 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        event(new Registered($user));
+        // event(new Registered($user)); ini nanti klo mau buat ada notifikasi pas register
+
+        return to_route('acc_index');
+    }
+
+    public function edit(User $user)
+    {
+        $levels = Level::orderBy("id", "desc")->get();
+        return Inertia::render('accounts/Edit', compact('user', 'levels'));
+    }
+
+    public function update(Request $request, User $user): RedirectResponse
+    {
+        $request->validate([
+            'id_level' => 'required|integer|exists:levels,id',
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|lowercase|email|max:255|unique:' . User::class . ',email,' . $user->id,
+        ]);
+
+        $user = $user->update([
+            'id_level' => $request->id_level,
+            'name' => $request->name,
+            'email' => $request->email,
+        ]);
+
+        return to_route('acc_index');
+    }
+
+    public function destroy(User $user): RedirectResponse
+    {
+        $user->delete();
 
         return to_route('acc_index');
     }

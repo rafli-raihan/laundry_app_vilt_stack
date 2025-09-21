@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import AppLayout from '@/layouts/AppLayout.vue';
-import { dashboard, acc_register, acc_index } from '@/routes';
+import { dashboard, acc_register, acc_index, acc_edit, acc_delete } from '@/routes';
 import { type BreadcrumbItem } from '@/types';
 import { Head, Link } from '@inertiajs/vue3';
 import Button from '@/components/ui/button/Button.vue';
@@ -62,8 +62,12 @@ const userProps = defineProps<{
                         <TableCell class="text-center">{{ user.email }}</TableCell>
                         <TableCell class="text-center">{{ user.id_level }}</TableCell>
                         <TableCell class="flex gap-2">
-                            <Button variant="default" size="sm" class="">Edit</Button>
-                            <Button variant="ghost" size="sm" class="hover:text-red-400">Delete</Button>
+                            <Link :href="acc_edit(user.id).url">
+                                <Button variant="default" size="sm" class="">Edit</Button>
+                            </Link>
+                            <Link :href="acc_delete(user.id).url">
+                                <Button variant="ghost" size="sm" class="hover:text-red-400">Delete</Button>
+                            </Link>
                         </TableCell>
                     </TableRow>
                 </TableBody>
