@@ -4,10 +4,10 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Level;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Inertia\Inertia;
@@ -17,14 +17,16 @@ class RegisteredUserController extends Controller
 {
     public function index()
     {
-        return Inertia::render('accounts/Index');
+        $users = User::orderBy('id', 'asc')->get();
+        return Inertia::render('accounts/Index', compact('users'));
     }
     /**
      * Show the registration page.
      */
     public function create(): Response
     {
-        return Inertia::render('accounts/Register');
+        $levels = Level::orderBy("id", "desc")->get();
+        return Inertia::render('accounts/Register', compact('levels'));
     }
 
     /**
@@ -49,8 +51,6 @@ class RegisteredUserController extends Controller
         ]);
 
         event(new Registered($user));
-
-        Auth::login($user);
 
         return to_route('acc_index');
     }

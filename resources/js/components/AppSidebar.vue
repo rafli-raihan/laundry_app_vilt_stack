@@ -11,7 +11,7 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import { dashboard } from '@/routes';
+import { dashboard, acc_index } from '@/routes';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/vue3';
 import { BadgeDollarSign, BookOpen, Folder, LayoutGrid, ShowerHead, Users } from 'lucide-vue-next';
@@ -30,7 +30,7 @@ const mainNavItems: NavItem[] = [
     },
     {
         title: 'Pengguna',
-        href: '/accounts',
+        href: acc_index().url,
         icon: Users,
     },
 ];

@@ -14,7 +14,7 @@ Route::get('dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware(['auth', 'SuperAdmin'])->group(function () {
-    Route::get('accounts', [RegisteredUserController::class, 'index'])->name('acc_index');
+    Route::get('accounts/', [RegisteredUserController::class, 'index'])->name('acc_index');
 
     Route::get('accounts/register', [RegisteredUserController::class, 'create'])->name('acc_register');
 

@@ -11,6 +11,7 @@ import { type BreadcrumbItem } from '@/types';
 import { Form, Head } from '@inertiajs/vue3';
 import { LoaderCircle } from 'lucide-vue-next';
 
+
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Pendaftaran Pengguna',
