@@ -14,19 +14,29 @@ import {
 import { dashboard, acc_index, customers_index } from '@/routes';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/vue3';
-import { BadgeDollarSign, BookOpen, Folder, LayoutGrid, ShowerHead, Users } from 'lucide-vue-next';
+import { BadgeDollarSign, BookUser, BookOpen, Folder, LayoutDashboard, ShowerHead, Users } from 'lucide-vue-next';
 import AppLogo from './AppLogo.vue';
 
 const mainNavItems: NavItem[] = [
     {
-        title: 'Transaksi',
+        title: 'Dashboard',
+        href: dashboard(),
+        icon: LayoutDashboard,
+    },
+    {
+        title: 'Kasir',
         href: dashboard(),
         icon: BadgeDollarSign,
     },
     {
         title: 'Customer',
         href: customers_index().url,
-        icon: BadgeDollarSign,
+        icon: BookUser,
+    },
+    {
+        title: 'Laporan Transaksi',
+        href: dashboard(),
+        icon: BookOpen,
     },
     {
         title: 'Layanan',
