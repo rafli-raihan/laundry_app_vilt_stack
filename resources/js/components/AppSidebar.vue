@@ -11,7 +11,7 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import { dashboard, acc_index } from '@/routes';
+import { dashboard, acc_index, customers_index } from '@/routes';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/vue3';
 import { BadgeDollarSign, BookOpen, Folder, LayoutGrid, ShowerHead, Users } from 'lucide-vue-next';
@@ -25,7 +25,7 @@ const mainNavItems: NavItem[] = [
     },
     {
         title: 'Customer',
-        href: dashboard(),
+        href: customers_index().url,
         icon: BadgeDollarSign,
     },
     {

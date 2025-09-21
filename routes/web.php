@@ -35,6 +35,17 @@ Route::middleware(['auth', 'SuperAdmin'])->group(function () {
     Route::put('services/{service}', [App\Http\Controllers\ServiceController::class, 'update'])->name('service_update');
     // delete service
     Route::delete('services/{service}', [App\Http\Controllers\ServiceController::class, 'destroy'])->name('service_delete');
+
+    // customers
+    Route::get('customers/', [App\Http\Controllers\CustomerController::class, 'index'])->name('customers_index');
+    // create customer
+    Route::get('customers/create', [App\Http\Controllers\CustomerController::class, 'create'])->name('customers_register');
+    Route::post('customers/store', [App\Http\Controllers\CustomerController::class, 'store'])->name('customers_store');
+    // edit customer
+    Route::get('customers/{customer}/edit', [App\Http\Controllers\CustomerController::class, 'edit'])->name('customers_edit');
+    Route::put('customers/{customer}', [App\Http\Controllers\CustomerController::class, 'update'])->name('customers_update');
+    // delete customer
+    Route::delete('customers/{customer}', [App\Http\Controllers\CustomerController::class, 'destroy'])->name('customers_delete');
 });
 
 
