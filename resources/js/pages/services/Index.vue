@@ -43,7 +43,7 @@ function handleDelete(serviceId: number) {
 
 <template>
 
-    <Head title="Akun Layanan" />
+    <Head title="Daftar Layanan" />
 
     <AppLayout :breadcrumbs="breadcrumbs">
         <div
