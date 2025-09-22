@@ -55,7 +55,7 @@ function routeUrl(name: string) {
     const map: Record<string, string> = {
         'kasir_customers': '/kasir/customers',
         'kasir_services': '/kasir/services',
-        'kasir_orders.store': '/kasir/orders',
+        'kasir_store': '/kasir/orders',
     };
     return map[name] ?? '/';
 }
@@ -138,7 +138,7 @@ async function submitOrder() {
         };
 
         const csrf = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') ?? '';
-        const res = await fetch(routeUrl('kasir_orders.store'), {
+        const res = await fetch(routeUrl('kasir_store'), {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -170,7 +170,7 @@ onMounted(fetchData);
 </script>
 
 <template>
-    <Head title="Kasir" />
+    <Head title="Kasir"  />
 
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="p-4">

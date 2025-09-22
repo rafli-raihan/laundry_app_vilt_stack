@@ -49,7 +49,7 @@ Route::middleware(['auth', 'Operator'])->group(function () {
     Route::get('kasir', [TransactionController::class, 'index'])->name('kasir_index');
     Route::get('kasir/customers', [TransactionController::class, 'customers'])->name('kasir_customers');
     Route::get('kasir/services', [TransactionController::class, 'services'])->name('kasir_services');
-    Route::post('kasir/orders', [TransactionController::class, 'store'])->name('kasir_orders.store');
+    Route::post('kasir/orders', [TransactionController::class, 'store'])->name('kasir_store');
 
     // customers
     // create customer
