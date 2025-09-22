@@ -1,15 +1,13 @@
 <script setup lang="ts">
 import { ref, reactive, computed, onMounted } from 'vue';
 import AppLayout from '@/layouts/AppLayout.vue';
-import { dashboard } from '@/routes';
+import { kasir_customers, kasir_services, kasir_store, customers_register } from '@/routes';
 import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/vue3';
+import Button from '@/components/ui/button/Button.vue';
 
 const breadcrumbs: BreadcrumbItem[] = [
-    {
-        title: 'Kasir',
-        href: '#',
-    },
+    { title: 'Kasir', href: '#' },
 ];
 
 type Customer = { id: number; customer_name: string; phone?: string; address?: string };
@@ -40,31 +38,15 @@ const change = computed(() => {
     return Math.max(0, Number(orderPay.value) - Number(total.value));
 });
 
-// build URLs from named routes if Ziggy/route() is available, else fallback to hardcoded paths
-function routeUrl(name: string) {
-    try {
-        // @ts-ignore - window.route injected by Ziggy in many setups
-        if (typeof (window as any).route === 'function') {
-            // when route has no parameters
-            return (window as any).route(name) as string;
-        }
-    } catch (e) {
-        // ignore
-    }
-    // fallback map for your route names
-    const map: Record<string, string> = {
-        'kasir_customers': '/kasir/customers',
-        'kasir_services': '/kasir/services',
-        'kasir_store': '/kasir/orders',
-    };
-    return map[name] ?? '/';
+function getCsrf(): string {
+    return document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') ?? '';
 }
 
 async function fetchData() {
     try {
         const [cRes, sRes] = await Promise.all([
-            fetch(routeUrl('kasir_customers')),
-            fetch(routeUrl('kasir_services')),
+            fetch(kasir_customers().url, { credentials: 'same-origin' }),
+            fetch(kasir_services().url, { credentials: 'same-origin' }),
         ]);
         if (cRes.ok) customers.value = await cRes.json();
         if (sRes.ok) services.value = await sRes.json();
@@ -137,13 +119,13 @@ async function submitOrder() {
             })),
         };
 
-        const csrf = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') ?? '';
-        const res = await fetch(routeUrl('kasir_store'), {
+        const res = await fetch(kasir_store().url, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': csrf,
+                'X-CSRF-TOKEN': getCsrf(),
             },
+            credentials: 'same-origin',
             body: JSON.stringify(payload),
         });
 
@@ -186,12 +168,13 @@ onMounted(fetchData);
                                     {{ c.customer_name }} - {{ c.phone ?? '' }}
                                 </option>
                             </select>
-                            <button
-                                class="rounded bg-indigo-600 px-4 py-2 text-white"
-                                @click="() => { /* open modal to create customer (not implemented) */ }"
+                            <Button
+                                variant="secondary"
+                                class="rounded text-white"
+                                :to="customers_register().url"
                             >
                                 + Baru
-                            </button>
+                            </Button>
                         </div>
                     </div>
 
@@ -222,7 +205,7 @@ onMounted(fetchData);
                             <thead>
                                 <tr class="text-left text-sm text-gray-500">
                                     <th class="py-2">Layanan</th>
-                                    <th class="py-2">Qty</th>
+                                    <th class="py-2">Kg</th>
                                     <th class="py-2">Harga</th>
                                     <th class="py-2">Subtotal</th>
                                     <th class="py-2">Aksi</th>
