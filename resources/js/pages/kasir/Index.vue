@@ -3,7 +3,7 @@ import { ref, reactive, computed, onMounted } from 'vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { kasir_customers, kasir_services, kasir_store, customers_register } from '@/routes';
 import { type BreadcrumbItem } from '@/types';
-import { Head } from '@inertiajs/vue3';
+import { Head, Link } from '@inertiajs/vue3';
 import Button from '@/components/ui/button/Button.vue';
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -152,7 +152,8 @@ onMounted(fetchData);
 </script>
 
 <template>
-    <Head title="Kasir"  />
+
+    <Head title="Kasir" />
 
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="p-4">
@@ -160,7 +161,7 @@ onMounted(fetchData);
                 <!-- Left: Controls -->
                 <div class="md:col-span-2 space-y-4">
                     <div class="rounded-lg border p-4">
-                        <h2 class="mb-2 text-lg font-medium">Informasi Customer</h2>
+                        <h2 class="mb-2 text-lg font-medium">Informasi Pelanggan</h2>
                         <div class="flex gap-2">
                             <select v-model="selectedCustomer" class="w-1/2 rounded border p-2">
                                 <option :value="null">-- Pilih customer --</option>
@@ -168,13 +169,9 @@ onMounted(fetchData);
                                     {{ c.customer_name }} - {{ c.phone ?? '' }}
                                 </option>
                             </select>
-                            <Button
-                                variant="secondary"
-                                class="rounded text-white"
-                                :to="customers_register().url"
-                            >
-                                + Baru
-                            </Button>
+                            <Link :href="customers_register().url">
+                            <Button variant="secondary">Baru +</Button>
+                            </Link>
                         </div>
                     </div>
 
@@ -187,15 +184,10 @@ onMounted(fetchData);
                                     {{ s.service_name }} — Rp {{ Number(s.price).toLocaleString() }}
                                 </option>
                             </select>
-                            <input
-                                type="number"
-                                min="1"
-                                v-model.number="qty"
-                                class="w-24 rounded border p-2"
-                            />
-                            <button class="rounded bg-green-600 px-4 py-2 text-white" @click="addToCart">
+                            <input type="number" min="1" v-model.number="qty" class="w-24 rounded border p-2" />
+                            <Button variant="outline" @click="addToCart">
                                 Tambah
-                            </button>
+                            </Button>
                         </div>
                     </div>
 
@@ -218,9 +210,10 @@ onMounted(fetchData);
                                     <td class="py-2">Rp {{ Number(item.price).toLocaleString() }}</td>
                                     <td class="py-2">Rp {{ Number(item.subtotal).toLocaleString() }}</td>
                                     <td class="py-2">
-                                        <button class="rounded bg-red-500 px-3 py-1 text-white" @click="removeFromCart(idx)">
+                                        <Button variant="destructive" size="sm"
+                                            @click="removeFromCart(idx)">
                                             Hapus
-                                        </button>
+                                        </Button>
                                     </td>
                                 </tr>
                                 <tr v-if="cart.length === 0">
@@ -242,12 +235,8 @@ onMounted(fetchData);
                             </div>
                             <div class="flex justify-between">
                                 <span>Pembayaran</span>
-                                <input
-                                    type="number"
-                                    min="0"
-                                    v-model.number="orderPay"
-                                    class="w-32 rounded border p-2 text-right"
-                                />
+                                <input type="number" min="0" v-model.number="orderPay"
+                                    class="w-32 rounded border p-2 text-right" />
                             </div>
                             <div class="flex justify-between font-semibold">
                                 <span>Kembalian</span>
@@ -256,18 +245,11 @@ onMounted(fetchData);
                         </div>
 
                         <div class="mt-4 flex gap-2">
-                            <button
-                                class="w-full rounded bg-blue-600 px-4 py-2 text-white disabled:opacity-50"
-                                :disabled="loading"
-                                @click="submitOrder"
-                            >
+                            <button class="w-full rounded bg-blue-500/65 px-4 py-2 text-white disabled:opacity-50"
+                                :disabled="loading" @click="submitOrder">
                                 Simpan Order
                             </button>
-                            <button
-                                class="w-full rounded border px-4 py-2"
-                                :disabled="loading"
-                                @click="clearCart"
-                            >
+                            <button class="w-full rounded border px-4 py-2" :disabled="loading" @click="clearCart">
                                 Reset
                             </button>
                         </div>
